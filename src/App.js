@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+
 import './App.css';
+import FormComponent from "./form";
+import TemplateComponent from "./template";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    useHistory,
+    useLocation
+} from "react-router-dom";
+import Routers from "./template/router";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    return (
+        <Router>
+            <div>
+                <Switch>
+                    {Routers.map((item, index) => {
+                        if(item.path == '/')
+                            return (
+                                <Route exact path={item.path} key={index}>
+                                    <TemplateComponent content={item.component} />
+                                </Route>
+                            )
+                        return (
+                            <Route path={item.path} key={index}>
+                                <TemplateComponent content={item.component} />
+                            </Route>)
+               })}
+                </Switch>
+            </div>
+        </Router>
+    );
+
 }
 
 export default App;
