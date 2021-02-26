@@ -9,7 +9,19 @@ const FormComponent = () => {
     const [state, setState] = useState({id:0, data:{}})
 
     const { register, handleSubmit, watch, errors, setValue, control } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        console.log(data);
+        fetch(`http://127.0.0.1:8000/Cliente/`, {
+            method:'POST', body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).
+        then(r => r.json()).then(r => {
+            console.log(r)
+        })
+    }
 
     const PesquisarCep = (cep) =>{
         fetch(`${URL}${cep}/json`).
@@ -26,42 +38,42 @@ const FormComponent = () => {
             <Grid container spacing={2}>
                 <Grid item>
                     <TextField
-                        error={!!errors['cep']}
-                        helperText={errors['cep']?.message}
+                        error={!!errors['name']}
+                        helperText={errors['nome']?.message}
                         inputRef={register({ required: { value: true, message: "campo obrigatorio" }, maxLength: 8})}
-                        label="Cep"
-                        name={'cep'}
-                        onChange={(e) => {
-
-                            if (e.target.value.length==8){
-                            PesquisarCep(e.target.value)
-                        }
-                    }}/>
+                        label="Nome"
+                        name={'name'}
+                    />
                 </Grid>
             <Grid item>
                 <TextField
-                    name={'fone'}
+                    name={'phone'}
                     label="Telefone"
                     inputRef={register}
                 />
             </Grid>
                 <Grid item>
                 <TextField
-                    name={'localidade'}
-                    label="Cidade"
-                    disabled
-                    // value={state.data?.localidade}
+                    name={'email'}
+                    label="Email"
+                    inputRef={register}
+                />
+            </Grid>
+            </Grid>
+                <Grid item>
+                <TextField
+                    name={'cnpj'}
+                    label="CNPJ"
                     inputRef={register}
                 />
             </Grid>
             {/*<Grid item>*/}
             {/*    <TextField*/}
-            {/*        name={'cpf'}*/}
+            {/*        name={'cn'}*/}
             {/*        label="CPF"*/}
             {/*        inputRef={register}*/}
             {/*    />*/}
             {/*</Grid>*/}
-            </Grid>
                 <Grid>
                     <Controller
                         as={

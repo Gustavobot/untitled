@@ -7,8 +7,8 @@ const TableComponent = () => {
     const [state, setState] = useState({data:[], loading:false});
     const consultar = () => {
         setState({...state, loading:true})
-        fetch('https://api.mocki.io/v1/76d993c3').
-        then(r => r.json()).then(r => setState({...state, data:r.data, loading:false}))
+        fetch('http://127.0.0.1:8000/Cliente/').
+        then(r => r.json()).then(r => setState({...state, data:r, loading:false}))
     }
 
     const columns = [
@@ -23,6 +23,14 @@ const TableComponent = () => {
         {
             name: "name",
             label: "Name",
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
+        {
+            name: "email",
+            label: "Email",
             options: {
                 filter: true,
                 sort: false,
